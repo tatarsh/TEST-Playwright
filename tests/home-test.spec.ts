@@ -24,7 +24,7 @@ test('Add one item to cart and compare price with total', async ({ page }) => {
   await page.locator('.basket_block .mpquickcart-icon-wrapper').click();
 
   // Get total price from cart
-  const totalPrice = await page.locator('.cart-totals .price').last().innerText();
+  const totalPrice = await page.locator('.cart-totalsprice').last().innerText();
 
   // Compare prices
   expect(totalPrice).toBe(itemPrice); 
