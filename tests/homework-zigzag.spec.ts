@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('Zigzag.am - Add products and verify cart and checkout', async ({ page }) => {
   await page.goto('https://www.zigzag.am/');
+  // just for the use
   await expect(page).toHaveURL(/zigzag\.am/);
   await expect(page).toHaveTitle(/Zigzag|Զիգզագ/);
 
@@ -25,25 +26,20 @@ test('Zigzag.am - Add products and verify cart and checkout', async ({ page }) =
   await addToCartButton.click();
 
 
-  // Step 6: Verify added to cart
-  await page.locator('.basket_block .mpquickcart-icon-wrapper').click();
-  await expect(page.locator('.product-item-name')).toContainText(firstProductName);
-
-  // Step 7: Soft assert product name and price
+  // Step 6: Soft assert product name and price
+  await page.waitForTimeout(5000);
   const cartItem = page.locator('.minicart-items').first();
   await expect(cartItem).toContainText(firstProductName);
   await expect(cartItem).toContainText(firstProductPrice);
 
-  // Step 8: Choose another Recommended tab
-  // await page.getByRole('button', { name: 'Close' }).click();
-  // await page.locator('.action-close').click();
+  // Step 7: Choose another Recommended tab
   await page.locator('.modals-overlay').click();
   const recommendedTab2 = page.getByRole('link', { name: 'Կենցաղային տեխնիկա' });
   await expect(recommendedTab2).toBeVisible();
   await recommendedTab2.first().click();
   await expect(page.locator('.product_block .block_inner').first()).toBeVisible();
 
-  // Step 9–10: Select second product
+  // Step 8–10: Select second product
   const secondProduct = page.locator('.product_block .block_inner').first();
   const secondProductName = await secondProduct.locator('.product_name').innerText();
   const secondProductPrice = await secondProduct.locator('.product_price .current_price').innerText();
@@ -55,9 +51,7 @@ test('Zigzag.am - Add products and verify cart and checkout', async ({ page }) =
   await addToCartButton.click();
 
   // Step 12: Verify both items in cart (soft)
-//   await cartIcon.hover();
   const cartItems = page.locator('#mini-cart .product-item');
-  await expect(cartItems.first()).toBeVisible({ timeout: 3000 });
   console.log('Cart Items count:' + cartItems.count);
   await expect.soft(cartItems).toHaveCount(2);
   await expect(cartItems.nth(1).locator('.product-item-name a')).toContainText(firstProductName);
@@ -67,43 +61,30 @@ test('Zigzag.am - Add products and verify cart and checkout', async ({ page }) =
   const totalExpected = parseFloat(firstProductPrice) + parseFloat(secondProductPrice);
   expect(parseFloat(totalPriceText)).toBeCloseTo(totalExpected);
 
-  // Step 13: Click "Զամբյուղ"
-//   await cartIcon.click();
-  // await expect(page).toHaveURL(/cart/);
-  // await expect(page.locator('.cart-page')).toBeVisible();
-
-  // Step 14: Check product names and prices
-  // const cartPageItems = page.locator('.cart-item-row');
-  // await expect(cartPageItems.nth(0)).toContainText(firstProductName);
-  // await expect(cartPageItems.nth(1)).toContainText(secondProductName);
-
-  // const summaryTotal = await page.locator('.order-total .amount').innerText();
-  // expect(parseFloat(summaryTotal)).toBeCloseTo(totalExpected);
-
-  // Step 15: Click "Պատվիրել"
+  // Step 13: Click "Պատվիրել"
   const continueBtn = page.locator('text=Պատվիրել');
   await expect(continueBtn).toBeEnabled();
   await continueBtn.click();
 
-  // Step 16: Fill delivery address
-  // await expect(page.locator('#checkout-form')).toBeVisible();
-  // await page.fill('input[name="firstName"]', 'John');
-  // await page.fill('input[name="lastName"]', 'Doe');
-  // await page.fill('input[name="address"]', 'Baghramyan 1, Yerevan');
-  // await page.fill('input[name="city"]', 'Yerevan');
-  // await page.fill('input[name="phone"]', '098765432');
+  // Step 14: Fill delivery address
+  await expect(page.locator('#checkout')).toBeVisible();
+  await page.waitForTimeout(5000);
+  const email = page.locator('#customer-email').first();
+  await email.fill('tatev@zemaenterprises.com');
+  const firstName = page.locator('#shipping-new-address-form input[name="firstname"]');
+  await firstName.fill('Tatev');
+  const lastName = page.locator('#shipping-new-address-form input[name="lastname"]').first();
+  await lastName.fill('Yan');
+  const region = page.locator('.filter-option-inner').nth(2);
+  await region.click();
+  await page.locator('.dropdown-menu li', { hasText: 'Երևան' }).click();
+  const requiredInputs = page.locator('#shipping-new-address-form input[required]');
+  const address = requiredInputs.nth(5);
+  await address.fill('Komitas');
+  const tel = page.locator('#telephone_fake').first();
+  await tel.fill('000888999');
 
-  // Step 17: Verify order summary
-  // const orderSummary = page.locator('.order-summary');
-  // await expect(orderSummary).toContainText(firstProductName);
-  // await expect(orderSummary).toContainText(secondProductName);
-  // await expect(orderSummary.locator('.order-total')).toContainText(summaryTotal);
+  // Step 15: Checkout
+  await page.locator('.checkout_submit').first().click();
 
-  // Bonus: Use remaining assertions (if applicable)
-//   await expect(cartIcon).toBeAttached();
-//   await expect(cartIcon).toBeInViewport();
-//   await expect(cartIcon).toBeEnabled();
-//   await expect(cartIcon).toHaveClass(/cart-icon/);
-  // await expect(page.locator('.logo')).toHaveAttribute('href', '/');
-  // await expect(page.locator('h1')).toHaveText(/Զամբյուղ|Cart/);
 });
