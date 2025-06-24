@@ -16,7 +16,7 @@ test('Search functionality returns relevant results', async ({ page }) => {
   await searchInput.press('Enter');
 
   // 5. Wait for results
-  const productCards = page.locator('.product_block .block_inner'); // adjust selector if needed
+  const productCards = page.locator('.product_block .block_inner'); 
   await expect(productCards.first()).toBeVisible();
 
   // 6. Check product titles contain the keyword (soft assertion-style)
