@@ -74,3 +74,32 @@ test('Search input displays auto-suggestions while typing', async ({ page }) => 
   const suggestions = suggestionList.locator('li');
   await expect(suggestions.first()).toBeVisible();
 });
+
+
+// Task 3: Print search results – price and name pairs
+test('Search and print product name-price pairs', async ({ page }) => {
+  // Step 1: Go to Zigzag.am
+  await page.goto('https://www.zigzag.am/');
+
+  // Step 2: Type into the search bar
+  const searchInput = page.locator('#search');
+  const keyword = 'IPHONE';
+  await page.locator('#search').fill(keyword);
+  await page.keyboard.press('Enter');
+
+  // Step 3: Wait for search results to load
+  const productCards = page.locator('.product_block .block_inner');
+  await expect(productCards.first()).toBeVisible();
+
+  // Step 4: Extract product name and price for each result
+  const names = await page.locator('.product-item .product-title a').allTextContents();
+  const prices = await page.locator('.product-item .price').allTextContents();
+
+  // Step 5: Print results
+  for (let i = 0; i < Math.min(names.length, prices.length); i++) {
+    console.log(`${names[i]} - ${prices[i]}`);
+  }
+  // Or
+  // const namePricePairs = names.slice(0, prices.length).map((name, i) => `${name} - ${prices[i]}`);
+  // console.log('Name-Price pairs:', namePricePairs);
+});
