@@ -6,7 +6,7 @@ test('Search functionality returns relevant results', async ({ page }) => {
   await page.goto('https://www.zigzag.am/');
 
   // 2. Locate the search input
-  const searchInput = page.locator('#search'); // adjust if needed
+  const searchInput = page.locator('#search'); 
 
   // 3. Type the keyword
   const keyword = 'iphone';
@@ -19,7 +19,7 @@ test('Search functionality returns relevant results', async ({ page }) => {
   const productCards = page.locator('.product_block .block_inner'); 
   await expect(productCards.first()).toBeVisible();
 
-  // 6. Check product titles contain the keyword (soft assertion-style)
+  // 6. Check product titles contain the keyword 
   const productTitles = await page.locator('.product-item .product-title').allTextContents();
   for (const title of productTitles) {
     expect(title.toLowerCase()).toContain(keyword.toLowerCase());
