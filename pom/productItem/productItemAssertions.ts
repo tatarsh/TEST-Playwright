@@ -5,7 +5,7 @@ export class ProductItemAssertions {
   constructor(private page: Page) {}
 
   async cartHasItems(expectedCount: number) {
-    const cartItems = await this.page.locator(ProductItemLocators.productName);
+    const cartItems = this.page.locator(ProductItemLocators.productName);
     await expect(cartItems).toHaveCount(expectedCount);
   }
 
