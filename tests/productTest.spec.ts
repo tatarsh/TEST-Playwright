@@ -7,13 +7,14 @@ test('Search and interact with product item', async ({ page }) => {
   await page.goto('https://sas.am');
 
   const home = new homePage4U(page);
-  await home.doSearch('Ararat');
+  await home.doSearch('ararat');
 
   const searchRes = new SearchResults(page);
   await searchRes.printNthProductName(0);
   await searchRes.clickOnNthProduct(0);
 
-  const productItem = new ProductItem(page, '.product');
+  const productItem = new ProductItem(page);
+  
   await productItem.printTitle();
   await productItem.printPrice();
   await productItem.addToCart();

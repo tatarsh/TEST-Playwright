@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from '../basePage';
-import { SearchResultsLocators } from './searchResults4ULocators';
+import { SearchResultsLocators } from './searchResultsLocators';
 
 export class SearchResults extends BasePage {
   constructor(page: Page) {

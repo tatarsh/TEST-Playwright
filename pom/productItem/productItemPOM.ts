@@ -1,17 +1,17 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from '../basePage';
-import { SearchResultsLocators } from '../searchResults4U/searchResults4ULocators';
+import { ProductItemLocators } from '../productItem/productItemLocators';
 
 export class ProductItem extends BasePage {
   readonly name: Locator;
   readonly price: Locator;
   readonly addToCartButton: Locator;
 
-  constructor(page: Page, productSelector: string) {
+  constructor(page: Page) {
     super(page);
-    this.name = page.locator(`${productSelector} ${SearchResultsLocators.productName}`);
-    this.price = page.locator(`${productSelector} ${SearchResultsLocators.productPrice}`);
-    this.addToCartButton = page.locator(`${productSelector} ${SearchResultsLocators.addToCartButton}`);
+    this.name = page.locator(ProductItemLocators.productName);
+    this.price = page.locator(ProductItemLocators.productPrice);
+    this.addToCartButton = page.locator(ProductItemLocators.addToCartButton);
   }
 
   async printTitle() {

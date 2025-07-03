@@ -1,8 +1,9 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from '../basePage';
-import { HomePageLocators } from './homePage4ULocators';
+import { HomePageLocators } from './homePageLocators';
 
-export class homePage4U extends BasePage {
+export class HomePage
+ extends BasePage {
   readonly searchField: Locator;
   readonly searchIcon: Locator;
   readonly logo: Locator;
