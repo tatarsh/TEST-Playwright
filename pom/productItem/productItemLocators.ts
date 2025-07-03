@@ -1,6 +1,6 @@
 export const ProductItemLocators = {
-  productWrapper: '.product',
-  productName: '.product__name',
-  productPrice: '.product__price',
-  addToCartButton: '.product__btn--cart',
+  productWrapper: '.card__content-wrapper',
+  productName: '.card__title',
+  productPrice: '.price__text',
+  addToCartButton: '.basket-counter__btn',
 };

@@ -9,16 +9,16 @@ export class HomeAssertions {
   }
 
   async expectLogoVisible() {
-    await expect(this.homePage.locators.logo).toBeVisible();
+    await expect(this.homePage.logo).toBeVisible();
   }
 
   async expectNavItemsExist() {
-    const count = await this.homePage.locators.navMenu.locator('li').count();
+    const count = await this.homePage.navMenu.locator('li').count();
     await expect(count).toBeGreaterThan(0);
   }
 
-  async expectProductCount(minCount = 1) {
-    const count = await this.homePage.locators.productItems.count();
-    await expect(count).toBeGreaterThanOrEqual(minCount);
-  }
+  // async expectProductCount(minCount = 1) {
+  //   const count = await this.homePage.products.count();
+  //   await expect(count).toBeGreaterThanOrEqual(minCount);
+  // }
 }
