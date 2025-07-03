@@ -1,8 +1,15 @@
-// import { expect, Page } from '@playwright/test';
-// import { SearchResultsLocators } from '../searchResults/searchResultsLocators';
+import { expect, Page, Locator } from '@playwright/test';
+import { SearchResultsLocators } from '../searchResults/searchResultsLocators';
 
-// export class SearchResultAssertions {
-//   constructor(private page: Page) {}
+export class SearchResultAssertions {
+      readonly searchField: Locator;
+      readonly searchIcon: Locator;
+
+  constructor(private page: Page) {}
+    async doSearch(searchKey: string) {
+    await this.searchField.fill(searchKey);
+    await this.searchIcon.click();
+  }
 
 //   async isVisible() {
 //     await expect(this.page.locator(SearchResultsLocators.searchResultSection)).toBeVisible();
@@ -33,4 +40,4 @@
 //     const items = this.page.locator(SearchResultsLocators.resultItems);
 //     await expect(items).toHaveCount(expected);
 //   }
-// }
+}

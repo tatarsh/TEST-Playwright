@@ -3,8 +3,13 @@ import { BasePage } from '../basePage';
 import { SearchResultsLocators } from './searchResultsLocators';
 
 export class SearchResults extends BasePage {
+  readonly searchField: Locator;
+  readonly searchIcon: Locator;
+
   constructor(page: Page) {
     super(page);
+       this.searchField = page.locator(SearchResultsLocators.searchField);
+        this.searchIcon = page.locator(SearchResultsLocators.searchIcon);
   }
 
   async clickOnNthProduct(n: number) {
