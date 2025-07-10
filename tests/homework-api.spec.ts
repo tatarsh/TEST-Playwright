@@ -59,3 +59,14 @@ test.describe('ReqRes API Test Suite', () => {
     console.log('DELETE /api/users/2 → Status:', res.status());
   });
 });
+
+
+// | Concept                  | What You Did                                                    |
+// | ------------------------ | --------------------------------------------------------------- |
+// | APIRequestContext        | Created once for all requests                                   |
+// | GET requests             | Fetched user lists and single user details                      |
+// | POST with body           | Created a user with `name` and `job`                            |
+// | PUT with body            | Updated a user                                                  |
+// | DELETE request           | Deleted a user and verified `204` status                        |
+// | Logging responses        | Used `console.log` to print full responses in a readable format |
+// | Assertions with `expect` | Validated that responses are OK or have specific status codes   |
