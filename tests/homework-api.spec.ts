@@ -17,6 +17,7 @@ test.describe('ReqRes API Test Suite', () => {
     });
   });
 
+
   test('GET /api/users?page=2 → List users', async () => {
     const res = await apiContext.get('/api/users?page=2');
     expect(res.ok()).toBeTruthy();
@@ -58,6 +59,36 @@ test.describe('ReqRes API Test Suite', () => {
     expect(res.status()).toBe(204); // 204 No Content is expected
     console.log('DELETE /api/users/2 → Status:', res.status());
   });
+
+  test.afterAll(async () => {
+    await apiContext.dispose();
+  });
+
+  test('Check status of all endpoints', async () => {
+    // GET /api/users?page=2
+    const resList = await apiContext.get('/api/users?page=2');
+    expect(resList.status()).toBe(200);
+
+    // GET /api/users/2
+    const resSingle = await apiContext.get('/api/users/2');
+    expect(resSingle.status()).toBe(200);
+
+    // POST /api/users
+    const resCreate = await apiContext.post('/api/users', {
+      data: { name: 'StatusCheck', job: 'Test' },
+    });
+    expect(resCreate.status()).toBe(201);
+
+    // PUT /api/users/2
+    const resUpdate = await apiContext.put('/api/users/2', {
+      data: { name: 'StatusCheck Updated', job: 'Test Updated' },
+    });
+    expect(resUpdate.status()).toBe(200);
+
+    // DELETE /api/users/2
+    const resDelete = await apiContext.delete('/api/users/2');
+    expect(resDelete.status()).toBe(204);
+  });
 });
 
 
@@ -70,3 +101,7 @@ test.describe('ReqRes API Test Suite', () => {
 // | DELETE request           | Deleted a user and verified `204` status                        |
 // | Logging responses        | Used `console.log` to print full responses in a readable format |
 // | Assertions with `expect` | Validated that responses are OK or have specific status codes   |
+
+/*
+No API key is required for the ReqRes API (https://reqres.in). It is a public demo API and does not require authentication or an API key for any of its endpoints.
+*/
